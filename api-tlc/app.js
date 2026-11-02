@@ -51,7 +51,7 @@ async function iniciar() {
             ? 'A porta 8080 já está em uso. Encerre o outro servidor e tente novamente.'
             : `Não foi possível iniciar o servidor: ${erro.message}`);
         await conexao.end();
-        process.exitCode = 1;
+        process.exitCode = 1;   
     });
 }
 

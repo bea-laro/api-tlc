@@ -1,0 +1,12 @@
+.link-entrar {
+    color: inherit;           
+    text-decoration: none;     
+}
+
+.link-entrar:hover {
+    color: #ff914d;            
+    text-decoration: underline;
+}
+.row {
+    --bs-gutter-x: 5rem;
+}

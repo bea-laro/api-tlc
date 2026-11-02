@@ -1,0 +1,144 @@
+<main class="d-flex flex-column min-vh-100">
+    {{!-- cabeçalho --}}
+    <header class="w-100 p-3" style="background-color: #ff914d">
+        <div class="row align-items-center g-0">
+            <div class="col-2 ps-5">
+                <img src="/img/logo.png" alt="Logo" class="img-fluid" style="max-width: 50px;">
+            </div>
+            <div class="col-8 text-center">
+                <h1 class="m-0">Treinamento de Liderança Cristã</h1>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <link rel="stylesheet" href="/css/cadastrar.css">
+    </header>
+    {{!-- conteudo --}}
+    <div class="container d-flex flex-column flex-grow-1">
+        <div class="row pt-4 flex-grow-1">
+            <div class="col-6 p-5 pt-3 rounded-start-4 d-flex flex-column justify-content-center align-items-center text-center" style="background-color: #ff914d">
+                <div class="mb-6">
+                    <img src="/img/logo.png" alt="Logo" class="img-fluid mb-5" style="max-width: 80px;">
+                </div>
+                <div class="mb-6 ">
+                    <h1 class="fs-4">Seja bem-vindo!</h1>
+                    <br>
+                    <h1 class="fs-4">Para acessar a plataforma</h1> 
+                    <h1 class="fs-4">cadastre-se com as suas informações pessoais.</h1>
+                </div>
+            </div>
+            <div class="col-6 p-5 rounded-end-4 d-flex flex-column justify-content-center align-items-center text-center" style="background-color: rgb(248, 247, 246)">
+                <h2 class="mb-4">Faça seu cadastro</h2>
+
+                
+                <form class="w-100 text-start" style="max-width: 500px;" id="formCadastro">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                             <label for="nome" class="form-label">Nome completo</label>
+                            <input type="nome" class="form-control"
+                               id="nome" name="nome" placeholder="Digite seu nome" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu E-mail" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                             <label for="celular" class="form-label">Número de celular</label>
+                            <input type="tel" class="form-control"
+                               id="celular" name="celular" placeholder="Digite seu número" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select class="form-select" id="estado" name="estado" required>
+                                <option value="" selected disabled>Selecione o estado</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                             <label for="diocese" class="form-label">Diocese</label>
+                            <input type="text" class="form-control"
+                               id="diocese" name="diocese" placeholder="Diocese que pertence" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="tlc" class="form-label">TLC que pertence</label>
+                            <input type="text" class="form-control" id="tlc" name="celular" placeholder="Digite a unidade TLC" required>
+                        </div>
+                    </div>
+
+
+                    <div class="col-8 mx-auto"> 
+                        <label for="senha" class="form-label" >Digite uma senha</label>
+                    <input type="password" class="form-control mb-4" id="senha" name="senha" placeholder="Digite uma senha" required>
+                    </div>
+                    
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" class="btn btn-laranja" value="Cadastrar" style="width: 300px;">
+                    </div>
+                </form>
+
+                <p class="mt-3 mb-0">
+                    Já tem login? <a href="/" class="link-entrar">Fazer login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const formulario = document.getElementById('formCadastro');
+
+        formulario.addEventListener('submit', function(event) {
+
+        let celular = document.getElementById("celular").value;
+        let numero = celular.replace(/\D/g, "");
+
+        if (numero.length !== 11 || numero[2] !== "9") {
+            event.preventDefault();
+            alert("Digite um número de celular válido!");
+        }
+
+        if (!formulario.checkValidity() || numero.length !== 11 || numero[2] !== "9") {
+            event.preventDefault();
+        }
+
+        formulario.classList.add('was-validated');
+
+    });
+
+    </script>
+
+
+</main>
