@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Ubuntu:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    font-family: 'Ubuntu', sans-serif;
+    color: white;
+}
+
+h2 {
+    font-family: 'Ubuntu', sans-serif;   
+}
+
+.btn-laranja {
+    background-color: #ff914d;
+    border-color: #ff914d;
+    color: #fff;
+    transition: background-color 0.3s;   /* a troca de cor fica suave */
+}
+
+/* mouse em cima: laranja mais escuro */
+.btn-laranja:hover {
+    background-color: #e87a2f;
+    border-color: #e87a2f;
+    color: #fff;
+}
+
+/* clicando: laranja ainda mais escuro */
+.btn-laranja:active {
+    background-color: #cc6a24 !important;
+    border-color: #cc6a24 !important;
+    color: #fff !important;
+}

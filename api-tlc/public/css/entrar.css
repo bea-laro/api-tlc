@@ -1,0 +1,9 @@
+.link-cadastro {
+    color: inherit;           
+    text-decoration: none;     
+}
+
+.link-cadastro:hover {
+    color: #ff914d;            
+    text-decoration: underline;
+}
