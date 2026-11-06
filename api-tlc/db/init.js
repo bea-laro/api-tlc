@@ -25,7 +25,7 @@ async function inicializarBanco() {
             email VARCHAR(150) NOT NULL,
             estado CHAR(2) NOT NULL,
             diocese VARCHAR(150) NOT NULL,
-            tcl VARCHAR(150) NOT NULL,
+            tlc VARCHAR(150) NOT NULL,
             senha_hash VARCHAR(255) NOT NULL COMMENT 'Armazenar hash da senha',
             criado_em TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),

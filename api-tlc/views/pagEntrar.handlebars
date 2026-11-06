@@ -28,12 +28,19 @@
             <div class="col-6 p-5 rounded-end-4 d-flex flex-column justify-content-center align-items-center text-center" style="background-color: rgb(248, 247, 246)">
                 <h2 class="mb-4">Faça seu login</h2>
 
-                <form class="w-100 text-start" style="max-width: 320px;">
+                {{#if sucesso}}
+                    <div class="alert alert-success w-100" style="max-width: 320px;">{{sucesso}}</div>
+                {{/if}}
+                {{#if erro}}
+                    <div class="alert alert-danger w-100" style="max-width: 320px;">{{erro}}</div>
+                {{/if}}
+
+                <form class="w-100 text-start" style="max-width: 320px;" method="POST" action="/entrar">
                     <label for="email" class="form-label">E-mail</label>
-                    <input type="email" class="form-control mb-3" id="email" name="email" placeholder="Digite seu E-mail">
+                    <input type="email" class="form-control mb-3" id="email" name="email" placeholder="Digite seu E-mail" required>
 
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="password" class="form-control mb-4" id="senha" name="senha" placeholder="Digite sua Senha">
+                    <input type="password" class="form-control mb-4" id="senha" name="senha" placeholder="Digite sua Senha" required>
 
                     <input type="submit" class="btn btn-laranja w-100" value="Entrar">
                 </form>
