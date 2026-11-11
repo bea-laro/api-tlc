@@ -1,0 +1,48 @@
+<h4 class="mb-0">Relatórios</h4>
+<p class="text-muted">Acompanhe o uso da plataforma.</p>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h3 class="mb-0">{{totalUsuarios}}</h3>
+            <small class="text-muted">Usuários cadastrados</small>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h3 class="mb-0">{{totalAcessos}}</h3>
+            <small class="text-muted">Acessos aos conteúdos</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h6>Conteúdos mais acessados</h6>
+            <canvas id="graficoTemas"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h6>Sub-regiões com mais acessos</h6>
+            <canvas id="graficoSub"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function grafico(idCanvas, dados, cor) {
+        new Chart(document.getElementById(idCanvas), {
+            type: 'bar',
+            data: {
+                labels: dados.map(d => d.rotulo),
+                datasets: [{ label: 'Acessos', data: dados.map(d => d.total), backgroundColor: cor }]
+            },
+            options: { indexAxis: 'y', plugins: { legend: { display: false } } }
+        });
+    }
+    grafico('graficoTemas', {{{porTemaJson}}}, '#ff914d');
+    grafico('graficoSub', {{{porSubJson}}}, '#263B4A');
+</script>

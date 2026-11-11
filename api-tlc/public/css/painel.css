@@ -1,0 +1,57 @@
+body { background-color: #f5f6f8; }
+
+
+.menu {
+    width: 220px;
+    min-height: 100vh;
+    background: #fff;
+    border-right: 1px solid #e5e5e5;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+}
+.menu-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
+.menu-logo img { width: 40px; }
+.menu-logo strong { display: block; color: #263B4A; font-size: 20px; line-height: 1; }
+.menu-logo small { color: #f8843c; font-size: 11px; }
+
+.menu .nav-link { color: #263B4A; border-radius: 8px; margin-bottom: 4px; }
+.menu .nav-link i { margin-right: 8px; }
+.menu .nav-link:hover { background: #f5f6f8; }
+.menu .nav-link.ativo { background: #fff1e6; color: #cc6a24; font-weight: 600; }
+.selo-adm { background: #ff914d; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 4px; }
+
+/* Topo */
+.topo {
+    height: 64px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #263B4A;
+}
+
+.conteudo { max-width: 1000px; }
+
+/* Home */
+.banner { background-color: #263B4A; }
+.card-opcao { border-radius: 12px; transition: box-shadow 0.2s; }
+.card-opcao:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+.card-opcao .icone {
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff1e6; color: #cc6a24;
+    border-radius: 8px; font-size: 20px; margin-bottom: 12px;
+}
+
+/* Cards dos temas (página Materiais) */
+.card-tema { border-radius: 12px; overflow: hidden; transition: box-shadow 0.2s; }
+.card-tema:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+.card-tema-topo {
+    height: 90px; display: flex; align-items: center; justify-content: center;
+    font-size: 28px; background: #fff1e6; color: #cc6a24;
+}
+.row > div:nth-child(3n+2) .card-tema-topo { background: #e8f0fb; color: #1a4a7e; }
+.row > div:nth-child(3n+3) .card-tema-topo { background: #e6f4ea; color: #1e6b3a; }

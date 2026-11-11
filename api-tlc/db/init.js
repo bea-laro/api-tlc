@@ -27,11 +27,43 @@ async function inicializarBanco() {
             diocese VARCHAR(150) NOT NULL,
             tlc VARCHAR(150) NOT NULL,
             senha_hash VARCHAR(255) NOT NULL COMMENT 'Armazenar hash da senha',
+            tipo VARCHAR(10) NOT NULL DEFAULT 'comum',            
             criado_em TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             UNIQUE KEY uq_usuarios_email (email)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
+
+    await conexao.query(`
+        CREATE TABLE IF NOT EXISTS materiais (
+            id INT NOT NULL AUTO_INCREMENT,
+            titulo VARCHAR(150) NOT NULL,
+            descricao VARCHAR(255) NULL,
+            tipo VARCHAR(10) NOT NULL,
+            arquivo VARCHAR(255) NOT NULL,
+            PRIMARY KEY (id)
+        )
+    `);
+
+    // Guarda cada vez que alguém abre um material (usado nos relatórios)
+    await conexao.query(`
+        CREATE TABLE IF NOT EXISTS acessos (
+            id INT NOT NULL AUTO_INCREMENT,
+            usuario_id INT NOT NULL,
+            material_id INT NOT NULL,
+            criado_em TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id)
+        )
+    `);
+
+    // Adiciona a coluna sub-região na tabela usuarios que já existe
+    // (se a coluna já existir, o MySQL dá erro ER_DUP_FIELDNAME e a gente ignora)
+    try {
+        await conexao.query('ALTER TABLE usuarios ADD COLUMN subregiao VARCHAR(50) NULL');
+    } catch (erro) {
+        if (erro.code !== 'ER_DUP_FIELDNAME') throw erro;
+    }
+
 }
 
 function mensagemErroBanco(erro) {

@@ -1,0 +1,43 @@
+<h4>Meu perfil</h4>
+<p class="text-muted">Atualize seus dados pessoais e informações do TLC.</p>
+
+{{#if salvo}}<div class="alert alert-success">Dados atualizados!</div>{{/if}}
+{{#if erro}}<div class="alert alert-danger">{{erro}}</div>{{/if}}
+
+<form method="POST" action="/perfil" class="card p-4" style="max-width: 700px;">
+    <label for="nome" class="form-label">Nome completo</label>
+    <input type="text" class="form-control mb-3" id="nome" name="nome" value="{{perfil.nome}}" required>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="celular" class="form-label">Celular</label>
+            <input type="tel" class="form-control" id="celular" name="celular" value="{{perfil.celular}}" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{perfil.email}}" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="subregiao" class="form-label">Sub-região</label>
+            <select class="form-select" id="subregiao" name="subregiao" required>
+                {{#each opcoesSubregiao}}
+                <option value="{{valor}}" {{#if marcada}}selected{{/if}}>{{valor}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="diocese" class="form-label">Diocese</label>
+            <input type="text" class="form-control" id="diocese" name="diocese" value="{{perfil.diocese}}" required>
+        </div>
+    </div>
+
+    <label for="tlc" class="form-label">TLC que pertence</label>
+    <input type="text" class="form-control mb-4" id="tlc" name="tlc" value="{{perfil.tlc}}" required>
+
+    <div class="text-end">
+        <input type="submit" class="btn btn-laranja" value="Salvar alterações">
+    </div>
+</form>

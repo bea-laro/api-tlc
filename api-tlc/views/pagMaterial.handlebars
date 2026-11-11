@@ -1,0 +1,10 @@
+<a href="/materiais" class="small text-decoration-none">← Voltar para os materiais</a><h4 class="mt-2">{{m.titulo}}</h4>
+<p class="text-muted">{{m.descricao}}</p>
+
+{{#if ehPdf}}
+    <iframe src="/arquivo/{{m.arquivo}}" class="w-100 border rounded" style="height: 80vh;"></iframe>
+{{else}}
+    <video controls class="w-100 rounded bg-black">
+        <source src="/arquivo/{{m.arquivo}}">
+    </video>
+{{/if}}

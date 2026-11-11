@@ -1,1 +1,37 @@
-<h2>Olá, {{nome}}!</h2>
+<section class="banner text-white rounded-4 p-4 d-flex align-items-center justify-content-between">
+    <div>
+        <p class="small fw-bold mb-1" style="color: #ff914d;">Olá, {{nome}}</p>
+        <h2 class="mb-2">Vamos continuar?</h2>
+        <p class="mb-0">Acesse os materiais e continue a sua formação no TLC.</p>
+    </div>
+    <a href="/materiais" class="btn btn-laranja">Ver materiais <i class="bi bi-arrow-right"></i></a>
+</section>
+
+<h4 class="mt-5">O que você quer fazer?</h4>
+<p class="text-muted">Escolha uma opção para começar.</p>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <a href="/materiais" class="card card-opcao p-3 text-decoration-none text-dark h-100">
+            <div class="icone"><i class="bi bi-book"></i></div>
+            <h6>Ver materiais</h6>
+            <small class="text-muted">Vídeos e PDFs organizados por tema.</small>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/perfil" class="card card-opcao p-3 text-decoration-none text-dark h-100">
+            <div class="icone"><i class="bi bi-person"></i></div>
+            <h6>Meu perfil</h6>
+            <small class="text-muted">Consulte e atualize seus dados.</small>
+        </a>
+    </div>
+    {{#if adm}}
+    <div class="col-md-4">
+        <a href="/relatorios" class="card card-opcao p-3 text-decoration-none text-dark h-100">
+            <div class="icone"><i class="bi bi-bar-chart"></i></div>
+            <h6>Relatórios</h6>
+            <small class="text-muted">Acompanhe o uso da plataforma.</small>
+        </a>
+    </div>
+    {{/if}}
+</div>
