@@ -1,0 +1,16 @@
+<a href="/admin/materiais" class="small text-decoration-none">← Voltar</a>
+<h4 class="mt-2">Editar material</h4>
+
+<form method="POST" action="/admin/materiais/{{m.id}}/editar" enctype="multipart/form-data" class="card p-4" style="max-width: 600px;">
+    <label for="titulo" class="form-label">Título</label>
+    <input type="text" class="form-control mb-3" id="titulo" name="titulo" value="{{m.titulo}}" required>
+
+    <label for="descricao" class="form-label">Descrição</label>
+    <input type="text" class="form-control mb-3" id="descricao" name="descricao" value="{{m.descricao}}">
+
+    <label for="arquivo" class="form-label">Trocar arquivo (opcional)</label>
+    <input type="file" class="form-control mb-1" id="arquivo" name="arquivo" accept=".pdf,video/*">
+    <small class="text-muted d-block mb-4">Deixe em branco para manter o arquivo atual.</small>
+
+    <input type="submit" class="btn btn-laranja" value="Salvar alterações">
+</form>

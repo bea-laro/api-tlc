@@ -1,5 +1,5 @@
 <h4>Enviar material</h4>
-<p class="text-muted">Escolha o tema e envie um PDF ou um vídeo.</p>
+<p class="text-muted">Envie um PDF ou um vídeo e gerencie o que já foi enviado.</p>
 
 {{#if sucesso}}<div class="alert alert-success">{{sucesso}}</div>{{/if}}
 {{#if erro}}<div class="alert alert-danger">{{erro}}</div>{{/if}}
@@ -16,3 +16,24 @@
 
     <input type="submit" class="btn btn-laranja" value="Enviar">
 </form>
+
+<h5 class="mt-5">Materiais enviados</h5>
+<div class="list-group">
+    {{#each materiais}}
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{titulo}}</strong>
+            <small class="text-muted text-uppercase">{{tipo}}</small><br>
+            <small class="text-muted">{{descricao}}</small>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="/admin/materiais/{{id}}/editar" class="btn btn-sm btn-outline-secondary">Editar</a>
+            <form method="POST" action="/admin/materiais/{{id}}/excluir" onsubmit="return confirm('Excluir este material?')">
+                <input type="submit" class="btn btn-sm btn-outline-danger" value="Excluir">
+            </form>
+        </div>
+    </div>
+    {{else}}
+    <p class="text-muted">Nenhum material enviado ainda.</p>
+    {{/each}}
+</div>

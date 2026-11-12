@@ -186,9 +186,73 @@ app.get('/relatorios', exigirLogin, exigirAdm, async (req, res) => {
 });
 
 //ADM: ENVIAR MATERIAL
+const avisos = {enviado: 'Material enviado!', editado: 'Material atualizado!', excluido: 'Material excluido' }
 
-app.get('/admin/materiais', exigirLogin, exigirAdm, (req, res) => {
-    res.render('pagEnviar', { layout: 'painel', titulo: 'Enviar material', ativoEnviar: true });
+app.get('/admin/materiais', exigirLogin, exigirAdm, async (req, res) => {
+    const [materiais] = await conexao.execute(
+        'SELECT id, titulo, descricao, tipo FROM materiais ORDER BY titulo'
+    );
+    res.render('pagEnviar', { layout: 'painel', titulo: 'Enviar material', ativoEnviar: true,
+        materiais, 
+        sucesso: avisos[req.query.ok],
+        erro: req.query.erro ? 'Envie um arquivo PDF ou vídeo.': null
+    });
+});
+// Recebe o formulário de envio
+app.post('/admin/materiais', exigirLogin, exigirAdm, upload.single('arquivo'), async (req, res) => {
+    if (!req.file) return res.redirect('/admin/materiais?erro=arquivo');
+
+    const tipo = req.file.mimetype === 'application/pdf' ? 'pdf' : 'video';
+    await conexao.execute(
+        'INSERT INTO materiais (titulo, descricao, tipo, arquivo) VALUES (?, ?, ?, ?)',
+        [req.body.titulo.trim(), (req.body.descricao || '').trim(), tipo, req.file.filename]
+    );
+    res.redirect('/admin/materiais?ok=enviado');
+});
+// pag de edição
+app.get('/admin/materiais/:id/editar', exigirLogin, exigirAdm, async (req, res) => {
+    const [linhas] = await conexao.execute(
+        'SELECT id, titulo, descricao FROM materiais WHERE id = ?',
+        [req.params.id]
+    );
+    if (!linhas[0]) return res.redirect('/admin/materiais');
+    res.render('pagEditar', { layout: 'painel', titulo: 'Editar material', ativoEnviar: true, m: linhas[0] });
+});
+// salva a edição (o arquivo novo é opcional)
+app.post('/admin/materiais/:id/editar', exigirLogin, exigirAdm, upload.single('arquivo'), async (req, res) => {
+    const id = req.params.id;
+    const titulo = req.body.titulo.trim();
+    const descricao = (req.body.descricao || '').trim();
+
+    if (req.file) {
+        // trocou o arquivo: apaga o antigo da pasta uploads e guarda o novo
+        const [linhas] = await conexao.execute('SELECT arquivo FROM materiais WHERE id = ?', [id]);
+        if (linhas[0]) fs.unlink(path.join(__dirname, 'uploads', linhas[0].arquivo), () => {});
+
+        const tipo = req.file.mimetype === 'application/pdf' ? 'pdf' : 'video';
+        await conexao.execute(
+            'UPDATE materiais SET titulo = ?, descricao = ?, tipo = ?, arquivo = ? WHERE id = ?',
+            [titulo, descricao, tipo, req.file.filename, id]
+        );
+    } else {
+        // não mandou arquivo: muda só o título e a descrição
+        await conexao.execute(
+            'UPDATE materiais SET titulo = ?, descricao = ? WHERE id = ?',
+            [titulo, descricao, id]
+        );
+    }
+    res.redirect('/admin/materiais?ok=editado');
+});
+
+// Exclui o material (apaga o arquivo, os acessos e o registro)
+app.post('/admin/materiais/:id/excluir', exigirLogin, exigirAdm, async (req, res) => {
+    const [linhas] = await conexao.execute('SELECT arquivo FROM materiais WHERE id = ?', [req.params.id]);
+    if (linhas[0]) {
+        fs.unlink(path.join(__dirname, 'uploads', linhas[0].arquivo), () => {});
+        await conexao.execute('DELETE FROM acessos WHERE material_id = ?', [req.params.id]);
+        await conexao.execute('DELETE FROM materiais WHERE id = ?', [req.params.id]);
+    }
+    res.redirect('/admin/materiais?ok=excluido');
 });
 
 app.post('/admin/materiais', exigirLogin, exigirAdm, upload.single('arquivo'), async (req, res) => {
@@ -206,12 +270,14 @@ app.post('/admin/materiais', exigirLogin, exigirAdm, upload.single('arquivo'), a
 });
 
 
-//lista de materiais de um tema
+//lista e busca de materiais
 app.get('/materiais', exigirLogin, async (req, res) => {
+    const busca = req.query.busca || '';
     const [materiais] = await conexao.execute(
-        'SELECT id, titulo, descricao, tipo FROM materiais ORDER BY titulo'
+        'SELECT id, titulo, descricao, tipo FROM materiais WHERE titulo LIKE ? OR descricao LIKE ? ORDER BY titulo',
+         [`%${busca}%`, `%${busca}%`]           
     );
-    res.render('pagMateriais', { layout: 'painel', titulo: 'Materiais', ativoMateriais: true, materiais });
+    res.render('pagMateriais', { layout: 'painel', titulo: 'Materiais', ativoMateriais: true, materiais, busca });
 });
 
 //Abre um material e registra o para os relatórios
